@@ -70,16 +70,17 @@ void execute_cmd(char **pString) {
         normal();
         return;
     } else if (pid == 0) {
-        if (execvp(pString[0], pString) == -1) {
+        if (execvp(pString[0], pString) < 0) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("please fucking end the pain oh god help fuck this hurts so much please stop it please stop the pain\n\n");
             normal();
-            return;
-        } else {
-            wait(NULL);
-            return;
+            exit(EXIT_FAILURE);
         }
+        exit(0);
+    } else {
+        wait(NULL);
+        return;
     }
 }
 
@@ -186,7 +187,7 @@ void print_help() {
     printf("\nHELP FOR CURSH IS AVAILABLE IN MY NEW BOOK:\n");
     printf("CURSH - THE ONLY SHELL THAT EXISTS\n");
     printf("\n");
-    printf("\nNOW AVAILABLE ON AMAZON.COM!\n");
+    printf("\nNOW AVAILABLE ON AMAZON.COM!\n\n");
 }
 
 void print_files(char *args) {
@@ -327,7 +328,7 @@ int parse_input(char *input, char **pString, char **pString1) {
     }
 
     // check for pipes
-    char* pipe_str[2];
+    char *pipe_str[2];
 
     if (strstr(input, "|") != NULL) {
         for (int i = 0; i < 2; i++) {
@@ -356,6 +357,7 @@ int parse_input(char *input, char **pString, char **pString1) {
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
+
 int main() {
     char input[MAX_CHAR];
     char *args[MAX_ARGS];
@@ -409,4 +411,5 @@ int main() {
     }
     return 0;
 }
+
 #pragma clang diagnostic pop
