@@ -11,7 +11,6 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <raudio.h>
 #include <dirent.h>
 
 // constants
@@ -191,7 +190,6 @@ void print_help() {
 }
 
 void print_files(char *args) {
-    printf("%s\n", args);
     // if args are empty, print all files in current directory
     if (strlen(args) == 0) {
         printf("\n");
@@ -287,6 +285,7 @@ int execute_builtin(char **pString) {
         if (pString[1] == NULL) {
             print_files("");
         } else {
+    printf("\n\n%s\n\n", pString[1]);
             fix_slashes(pString);
             print_files(pString[1]);
         }
@@ -305,13 +304,12 @@ int execute_builtin(char **pString) {
 }
 
 void parse_args(char *input, char **parsed_args) {
-    char *pch = strtok(input, " ");
-    int i = 0;
-    while (pch != NULL) {
-        parsed_args[i] = pch;
-        pch = strtok(NULL, " ");
-        i++;
-    }
+	int i;
+	for (i = 0; i < MAX_ARGS; i++) {
+		parsed_args[i] = strsep(&input, " ");
+		if (parsed_args[i] == NULL) { break; }
+		if (strlen(parsed_args[i]) == 0) { i--; }
+	}
 }
 
 int parse_input(char *input, char **pString, char **pString1) {
