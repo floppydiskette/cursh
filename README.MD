@@ -6,7 +6,8 @@ so one day i was wondering why no one has made a really funny cursed shell yet
 so i opened clion cause i accidentally bought the whole jetbrains suite with
 my mom's credit card and i started work on cursh!
 <br><br>
-#### WARNING: PIPES ARE BROKEN RIGHT NOW DON'T USE THEM
+#### ~~WARNING: PIPES ARE BROKEN RIGHT NOW DON'T USE THEM~~
+#### IT'S OKAY PIPES ARE FIXED NOW I THINK
 ## how 2 install B)
 ok so it's really simple! you can install cursh in 3 simple steps:
 1. open up ur terminal (with the vastly worse shell you're currently using)
