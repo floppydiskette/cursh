@@ -26,7 +26,8 @@
 // greeting
 void init_shell() {
     clear();
-
+    printf("\nCursh - the cursed shell :3 [Version 9.10.21]\n");
+    printf("(c) 2022 Real Microsoft Corporation. All right reserve.\n\n");
 }
 
 void print_shell_line() {
@@ -43,9 +44,10 @@ void print_shell_line() {
     printf("C:%s", cwd);
 }
 
-void fix_slashes(char *args[64]) {
-    int i;
-    for (i = 0; i < MAX_ARGS; i++) {
+// changes each backslash in each string to a forward slash
+void fix_slashes(char **args) {
+    int i = 0;
+    while (args[i]) {
         char *p = args[i];
         while (*p) {
             if (*p == '\\') {
@@ -53,10 +55,11 @@ void fix_slashes(char *args[64]) {
             }
             p++;
         }
+        i++;
     }
 }
 
-void execute_cmd(char *pString[64]) {
+void execute_cmd(char **pString) {
     fix_slashes(pString);
     int pid = fork();
 
@@ -80,13 +83,13 @@ void execute_cmd(char *pString[64]) {
     }
 }
 
-void execute_pipe(char *pString[64], char *pString1[64]) {
-    fix_slashes(pString);
-    fix_slashes(pString1);
+void execute_pipe(char **pString, char **pString1) {
+    //fix_slashes(pString);
+    //fix_slashes(pString1);
     int pipe_fd[2];
     int pid1, pid2;
 
-    if (pipe(pipe_fd) == -1) {
+    if (pipe(pipe_fd) < 0) {
         red();
         printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
         perror("jesus christ this hurts so much please stop it please stop the pain\n\n");
@@ -186,7 +189,8 @@ void print_help() {
     printf("\nNOW AVAILABLE ON AMAZON.COM!\n");
 }
 
-void print_files(char args[64]) {
+void print_files(char *args) {
+    printf("%s\n", args);
     // if args are empty, print all files in current directory
     if (strlen(args) == 0) {
         printf("\n");
@@ -223,7 +227,6 @@ void print_files(char args[64]) {
         printf("\n");
         // for each file in specified directory
         struct dirent *de;
-        fix_slashes(&args);
         DIR *dr = opendir(args);
         if (dr == NULL) {
             red();
@@ -254,7 +257,7 @@ void print_files(char args[64]) {
 
 }
 
-u_int8_t attempt_exit() {
+int attempt_exit() {
     red();
     printf("\nDO YOU REALLY WANT TO EXIT?\n");
     printf("\n TYPE YES IN PROPER ENGLISH TO EXIT\n");
@@ -270,7 +273,7 @@ u_int8_t attempt_exit() {
     }
 }
 
-u_int8_t execute_builtin(char *pString[64]) {
+int execute_builtin(char **pString) {
     if (strcmp(pString[0], "help") == 0) {
         print_help();
     } else if (strcmp(pString[0], "exit") == 0) {
@@ -279,7 +282,13 @@ u_int8_t execute_builtin(char *pString[64]) {
         fix_slashes(pString);
         chdir(pString[1]);
     } else if (strcmp(pString[0], "dir") == 0) {
-        print_files(pString[1]);
+        // if no args, call print_files with empty string
+        if (pString[1] == NULL) {
+            print_files("");
+        } else {
+            fix_slashes(pString);
+            print_files(pString[1]);
+        }
     } else if (strcmp(pString[0], "cls") == 0) {
         printf("\n\nCLEARING THE SCREEN, PLEASE WAIT...\n\n");
         sleep(20);
@@ -289,50 +298,55 @@ u_int8_t execute_builtin(char *pString[64]) {
         printf("\n\nPRESS ENTER TO CONTINUE\n\n");
         getchar();
     } else {
-        return 1;
+        return 0;
     }
     return 1;
 }
 
-int parse_input(char input[1024], char *pString[64], char *pString1[64]) {
+void parse_args(char *input, char **parsed_args) {
+    char *pch = strtok(input, " ");
+    int i = 0;
+    while (pch != NULL) {
+        parsed_args[i] = pch;
+        pch = strtok(NULL, " ");
+        i++;
+    }
+}
+
+int parse_input(char *input, char **pString, char **pString1) {
     // check if the input is empty
     if (strlen(input) == 0) {
         return -1;
     }
 
-    // check if there are any backslashes in the input
+    // check if there are any forward slashes (evil) in the input
     for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == '\\') {
+        if (input[i] == '/') {
             return -2;
         }
     }
 
-    // for each character in the input string, check if there is a | character
-    for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == '|') {
-            // if there is a | character, fill pString1 with everything after the |
-            // and fill pString with everything before the |
-            for (int j = i + 1; j < strlen(input); j++) {
-                pString1[j - i - 1] = input[j];
+    // check for pipes
+    char* pipe_str[2];
+
+    if (strstr(input, "|") != NULL) {
+        for (int i = 0; i < 2; i++) {
+            pipe_str[i] = strsep(&input, "|");
+            if (pipe_str[i] == NULL) {
+                break;
             }
-            for (int j = 0; j < i; j++) {
-                pString[j] = input[j];
-            }
-            return 2;
         }
-    }
-    // if we are still here, there is no | character
-    // so break the input string into args separated by spaces
-    char *pch = strtok(input, " ");
-    int i = 0;
-    while (pch != NULL) {
-        pString[i] = pch;
-        pch = strtok(NULL, " ");
-        i++;
+
+        // parse args
+        parse_args(pipe_str[0], pString);
+        parse_args(pipe_str[1], pString1);
+        return 2;
     }
 
+    parse_args(input, pString);
+
     // check if first argument is a built-in command
-    if (is_builtin(pString[0]) != 27) {
+    if (is_builtin(pString[0]) == 27) {
         return 1;
     } else {
         return 0;
@@ -350,12 +364,14 @@ int main() {
     init_shell();
 
     while (1) {
+        sleep(1);
         get_input(input);
 
         printf("\nPARSING COMMAND, PLEASE WAIT...\n");
+        //sleep(5);
         cmd_type = parse_input(input, args, pipe_args);
         // return values:
-        // -2: user put in a backslash ):<
+        // -2: user put in a forward slash ):<
         // -1: invalid input
         // 0 - normal command
         // 1 - builtin command
@@ -368,12 +384,27 @@ int main() {
         } else if (cmd_type == 0) {
             execute_cmd(args);
         } else if (cmd_type == 1) {
-            u_int8_t e = execute_builtin(args);
+            int e = execute_builtin(args);
             if (e == 2) {
-                break;
+                return 0;
+            } else if (e == 1) {
+                continue;
+            } else {
+                printf("INCORRECT INPUT PROVIDED\nASSUMING YOU ACCIDENTALLY HIT RETURN\nSLEEPING FOR 10 SECONDS TO PREVENT ACCIDENTAL INPUT\n");
+                sleep(10);
+                continue;
             }
         } else if (cmd_type == 2) {
             execute_pipe(args, pipe_args);
+        } else if (cmd_type == -2) {
+            red();
+            printf("\nYOU ARE NOT ALLOWED TO USE FORWARD SLASHES.\n");
+            printf("THIS ACT WILL PERMANENTLY AFFECT YOUR VALUE AS A HUMAN BEING.\n");
+            printf("\n");
+            printf("YOU HAVE BEEN SENT TO TIMEOUT FOR 30 SECONDS.\n");
+            normal();
+            sleep(30);
+            continue;
         }
     }
     return 0;
