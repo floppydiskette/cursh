@@ -1,0 +1,89 @@
+CURSH - THE ONLY SHELL THAT EXISTS
+a book written by husky
+
+dedicated to my wife and kids
+page break
+
+hello and thank you for purchasing my book
+please consider donating to my patreon
+i made this book with my love for you, my fans!
+also i love my enemies too because i was told to by my lawyers.
+
+ok so letz get on with the basics of how to use cursh!
+first step is installing it!
+that should be pretty sim[ple you think? WRONG!!!!!
+you have to do a ton of really complicated stuff to get it to work
+in fact, it is actually impossible to install cursh, i have been trolling you!
+
+
+
+
+
+
+
+
+haha just kidding! april fools!
+ok so you need to install it by cloning the github repo
+also you might need the readline-devel package (idk what its called on ur repo so find that out yourself please)
+ok so you clone the repo and then you go into the repo directory and you have to make a new directory
+you csan really call it whatever u like but usually the funny cmake people call it build
+then you have to cd into that directory and then you have to run cmake but cause the files are
+in the root directory of the repo you have to do cmake ..
+then you have to make the program (that is using the make command)
+if you don't have make installed, here is a link for it:
+https://www.gnu.org/software/make/
+(idk how to build it cause normally i'd use the makefile but since make isn't installed that'd be impossible)
+ok so now you have to cd into the build directory and then you have to run make
+or wait i think we were already in the build directory idk it doesn't matter just run make
+ok so now you have compiled the program and you have to run it
+although here's a pro tip for make!
+you can run make -j4 to compile with 4 threads at once
+or you can even run make -j(nproc) to compile with all the cores on your machine
+ok so now you have the program compiled and you can run it
+do ./cursh and it will run!
+!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!
+you cannot use the forward slash in cursh!!!
+use backslash only!!!!
+!!!!!!!!!!!!!!!!NO MORE IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!
+ok so now most importantly you have to make sure that you have a copy of cursh in every directory on your computer
+this will ensure that you can run cursh from anywhere, because idk what ur PATH var is
+idk if cursh even works with PATH, but i'm too lazy to check
+so once you do that, just run cursh whenever you want to use it
+it might be helpful to explain how to use cursh
+so now you have crush running and you see the prompt it's something like "C:\<directory> is where we do the command:"
+this is where you type in commands, so if you want to see the help menu, type help
+but actually the help menu just tells you to read this book so that's not very helpful heck
+assuming you are here because of that, i'll tell you some useful stuff you can do!
+as far as i know, cursh can run the normal unix commands that aren't just the funny ones built into the shell
+so i think you should be able to run ls
+HOWEVER! don't run ls because it will eventually be removed in favour of the better "dir" command
+infact , it might have already been removed by the time this book comes out!
+so if you want to see the list of files in the current directory, don't type ls!
+instead type dir (:
+you can use dir to list any directory you'd like!
+if you just run dir without any arguments it will list the current directory
+but if you want to list another directory, you can do something like "dir <directory>"
+you might eventually need to add the C:\ to the front if it isn't relative, but probably not right now.
+check the main.c file to see if this is necessary, or just check the listing of this book.
+if it says the word "BANANA" anywhere then that means we have implemented the C:\ change
+but yeah also with the dir command, you have to use backslashes like i said earlier
+although i doubt you were listening so i have to say this again just to be sure
+ok so now you're able to list a directory properly, but that doesn't help you much
+you can actually run the command cd to change the directory you're in! how cool!
+eventually, i'm also gonna make it so that you can run cd.. like in windows instead of needing the whole cd ..
+but that will be implemented along with the "BANANA" update.
+ok so now you've ran all these cool commands, but now your screen is probably really messy cause
+there's so much stuff on it; one simple solution!
+you can clean the screen by using the cls command!
+it might take a bit cause it has to clear the screen, but it's pretty cool!
+clearly if you've made it this far, you probably love waiting around for things
+this probably means you're quite patient!
+one thing that patient people will love is the ability to just stop everything from happening, and take a break
+for a moment; quite meditative!
+you can run the pause command, and it'll make the program pause until you press enter
+really relaxing! you can take this time to sit back, maybe get a cup of coffee, or something
+ok so of course you can also run the exit command to exit the program, but you really shouldn't do that.
+cursh is your friend! not your enemy!
+cursh is your life now, you mustn't abandon it!
+if you do, you'll regret it.
+also you can use pipes just like in bash, but they might be broken so idk
