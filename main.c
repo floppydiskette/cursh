@@ -370,7 +370,7 @@ int main() {
         get_input(input);
 
         printf("\nPARSING COMMAND, PLEASE WAIT...\n");
-        //sleep(5);
+        sleep(2);
         cmd_type = parse_input(input, args, pipe_args);
         // return values:
         // -2: user put in a forward slash ):<
