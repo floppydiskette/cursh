@@ -1,4 +1,0 @@
-/home/husky/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.6461.75/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/husky/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/213.6461.75/bin/ninja/linux/ninja -G Ninja /run/media/husky/epic_disk/github/cursh
--- Configuring done
--- Generating done
--- Build files have been written to: /run/media/husky/epic_disk/github/cursh/cmake-build-debug
