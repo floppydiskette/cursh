@@ -176,6 +176,8 @@ int is_builtin(char *string) {
         return 27;
     } else if (strcmp(string, "pause") == 0) {
         return 27;
+    } else if (strcmp(string, "paws") == 0) {
+        return 27;
     } else {
         return 9 + 10;
     }
@@ -293,7 +295,7 @@ int execute_builtin(char **pString) {
         printf("\n\nCLEARING THE SCREEN, PLEASE WAIT...\n\n");
         sleep(20);
         clear();
-    } else if (strcmp(pString[0], "pause") == 0) {
+    } else if (strcmp(pString[0], "pause") == 0 || strcmp(pString[0], "paws")) {
         // wait for user to press enter
         printf("\n\nPRESS ENTER TO CONTINUE\n\n");
         getchar();
