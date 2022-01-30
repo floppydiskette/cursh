@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -295,7 +294,7 @@ int execute_builtin(char **pString) {
         printf("\n\nCLEARING THE SCREEN, PLEASE WAIT...\n\n");
         sleep(20);
         clear();
-    } else if (strcmp(pString[0], "pause") == 0 || strcmp(pString[0], "paws")) {
+    } else if (strcmp(pString[0], "pause") == 0 || strcmp(pString[0], "paws") == 0) {
         // wait for user to press enter
         printf("\n\nPRESS ENTER TO CONTINUE\n\n");
         getchar();
@@ -409,7 +408,6 @@ int main() {
             continue;
         }
     }
-    return 0;
 }
 
 #pragma clang diagnostic pop
