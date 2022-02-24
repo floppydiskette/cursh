@@ -25,7 +25,9 @@ i literally just told you that wtf
 ## how 2 use
 just check the book CURSH - THE ONLY SHELL THAT EXISTS!<br>
 there should be a copy in the repo somewhere
-but i'm working on getting it published to amazon rn so no worries
+~~but i'm working on getting it published to amazon rn so no worries~~
+IT IS NOW AVAILABLE ON AMAZONG!!!!!
+https://www.amazon.com/dp/B09T66C7HC :D
 
 ## copyright and licensing
 i made this but you can use it too if you just credit me (floppydiskette)
