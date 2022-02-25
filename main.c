@@ -187,7 +187,8 @@ void print_help() {
     printf("\nHELP FOR CURSH IS AVAILABLE IN MY NEW BOOK:\n");
     printf("CURSH - THE ONLY SHELL THAT EXISTS\n");
     printf("\n");
-    printf("\nNOW AVAILABLE ON AMAZON.COM!\n\n");
+    printf("\nNOW AVAILABLE ON AMAZON.COM!\n");
+    printf("https://www.amazon.com/dp/B09T66C7HC\n\n");
 }
 
 void print_files(char *args) {
