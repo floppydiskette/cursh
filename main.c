@@ -178,6 +178,8 @@ int is_builtin(char *string) {
         return 27;
     } else if (strcmp(string, "cd") == 0) {
         return 27;
+    } else if (strcmp(string, "cd..") == 0) {
+        return 27;
     } else if (strcmp(string, "dir") == 0) {
         return 27;
     } else if (strcmp(string, "cls") == 0) {
@@ -294,6 +296,9 @@ int execute_builtin(char **pString) {
     } else if (strcmp(pString[0], "cd") == 0) {
         fix_slashes(pString);
         chdir(pString[1]);
+    } else if (strcmp(pString[0], "cd..") == 0) {
+        // change directory to parent directory
+        chdir("..");
     } else if (strcmp(pString[0], "dir") == 0) {
         // if no args, call print_files with empty string
         if (pString[1] == NULL) {
