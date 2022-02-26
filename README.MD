@@ -2,6 +2,7 @@
 ###### a cursh shell in action
 # cursh
 ### the cursed shell :3
+[![Packaging status](https://repology.org/badge/vertical-allrepos/cursh.svg)](https://repology.org/project/cursh/versions)   
 so one day i was wondering why no one has made a really funny cursed shell yet
 so i opened clion cause i accidentally bought the whole jetbrains suite with
 my mom's credit card and i started work on cursh!
