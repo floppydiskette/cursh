@@ -326,6 +326,36 @@ void parse_args(char *input, char **parsed_args) {
 	}
 }
 
+void handle_illegal_command(char *command) {
+    if (strcmp(command, "ls") == 0) {
+        red();
+        printf("\n\nYOU CANNOT USE THE COMMAND 'ls'\n");
+        printf("\nPLEASE USE THE COMMAND 'dir' instead (:\n\n");
+        sin_value += 0.3f;
+        printf("\nYOU ARE NOW IN TIMEOUT FOR 10 SECONDS\n");
+        normal();
+        return;
+    } else if (strcmp(command, "clear") == 0) {
+        red();
+        printf("\n\nYOU CANNOT USE THE COMMAND 'clear'\n");
+        printf("\nPLEASE USE THE COMMAND 'cls' instead (:\n\n");
+        sin_value += 0.2f;
+        printf("\nYOU ARE NOW IN TIMEOUT FOR 10 SECONDS\n");
+        normal();
+        return;
+    }
+}
+
+int64_t is_illegal_command(char *command) {
+    if (strcmp(command, "ls") == 0) {
+        return 1;
+    } else if (strcmp(command, "clear") == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 int parse_input(char *input, char **pString, char **pString1) {
     // check if the input is empty
     if (strlen(input) == 0) {
@@ -337,6 +367,11 @@ int parse_input(char *input, char **pString, char **pString1) {
         if (input[i] == '/') {
             return -2;
         }
+    }
+
+    // check if the input is an illegal command
+    if (is_illegal_command(input) == 1) {
+        return -3;
     }
 
     // check for pipes
@@ -430,6 +465,7 @@ int main() {
         sleep(2);
         cmd_type = parse_input(input, args, pipe_args);
         // return values:
+        // -3: illegal command!
         // -2: user put in a forward slash ):<
         // -1: invalid input
         // 0 - normal command
@@ -465,6 +501,10 @@ int main() {
             printf("YOU HAVE BEEN SENT TO TIMEOUT FOR 30 SECONDS.\n");
             normal();
             sleep(30);
+            continue;
+        } else if (cmd_type == -3) {
+            handle_illegal_command(args[0]);
+            sleep(10);
             continue;
         }
     }
