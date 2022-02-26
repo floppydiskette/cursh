@@ -298,8 +298,21 @@ int execute_builtin(char **pString) {
         // if no args, call print_files with empty string
         if (pString[1] == NULL) {
             print_files("");
+        } else if (pString[1][0] == '\\') {
+            // if non-relative args don't start with C:\, return error
+            red();
+            printf("\n\nYOU MUST CALL DIR WITH C:\\ AT THE BEGINNING OF AN ABSOLUTE PATH\n");
+            printf("\n\n");
+            sin_value += 0.6f;
+            normal();
+        } else if (pString[1][0] == 'C' && pString[1][1] == ':') {
+            // remove first two characters from args
+            char *args = pString[1];
+            args += 2;
+            fix_slashes(&args);
+            print_files(args);
         } else {
-    printf("\n\n%s\n\n", pString[1]);
+            printf("\n\n%s\n\n", pString[1]);
             fix_slashes(pString);
             print_files(pString[1]);
         }
@@ -318,12 +331,12 @@ int execute_builtin(char **pString) {
 }
 
 void parse_args(char *input, char **parsed_args) {
-	int i;
-	for (i = 0; i < MAX_ARGS; i++) {
-		parsed_args[i] = strsep(&input, " ");
-		if (parsed_args[i] == NULL) { break; }
-		if (strlen(parsed_args[i]) == 0) { i--; }
-	}
+    int i;
+    for (i = 0; i < MAX_ARGS; i++) {
+        parsed_args[i] = strsep(&input, " ");
+        if (parsed_args[i] == NULL) { break; }
+        if (strlen(parsed_args[i]) == 0) { i--; }
+    }
 }
 
 void handle_illegal_command(char *command) {
@@ -402,7 +415,7 @@ int parse_input(char *input, char **pString, char **pString1) {
 }
 
 float floor_funny(float x) {
-    return (int)x;
+    return (int) x;
 }
 
 float mod(float x, float y) {
@@ -448,7 +461,7 @@ int main() {
 
     // if seed is still 0, use time
     if (seed == 0) {
-        seed = (float)time(NULL);
+        seed = (float) time(NULL);
     }
 
     char input[MAX_CHAR];
