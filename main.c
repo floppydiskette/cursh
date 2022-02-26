@@ -391,10 +391,17 @@ float funny_rand(float *seed, float max) {
 
 }
 
+void sigint_handler() {
+    sin_value += 1;
+}
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
 
 int main() {
+
+    // no SIGINT allowed (:<
+    signal(SIGINT, sigint_handler);
 
     float seed = 0;
     // initialize random seed by getting cpu temperature
