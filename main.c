@@ -26,7 +26,7 @@ float sin_value = 0; // todo: add integration with christianity api
 // greeting
 void init_shell() {
     clear();
-    printf("\nCursh - the cursed shell :3 [Version 9.10.21]\n");
+    printf("\nCursh - the cursed shell :3 [Version 9.10.21.BANANA]\n");
     printf("(c) 2022 Real Microsoft Corporation. All right reserve.\n\n");
 }
 
