@@ -18,7 +18,8 @@ ok so it's really simple! you can install cursh in 3 simple steps:
 now you can run `./cursh` and it'll run in the terminal!
 <br>
 idk if ur install will allow you to do this, but it'd be really funny if you ran<br>
-`chsh -s <path to cursh>`
+`chsh -s <path to cursh>`  
+also you may need the readline library and the ncurses library, although idk
 
 ## how 2 build
 i literally just told you that wtf

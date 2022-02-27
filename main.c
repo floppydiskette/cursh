@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -22,10 +21,12 @@
 #define red() printf("\033[1;31m")
 #define normal() printf("\033[0m")
 
+float sin_value = 0; // todo: add integration with christianity api
+
 // greeting
 void init_shell() {
     clear();
-    printf("\nCursh - the cursed shell :3 [Version 9.10.21]\n");
+    printf("\nCursh - the cursed shell :3 [Version 9.10.21.BANANA]\n");
     printf("(c) 2022 Real Microsoft Corporation. All right reserve.\n\n");
 }
 
@@ -66,6 +67,7 @@ void execute_cmd(char **pString) {
         red();
         printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
         perror("oh god oh fuck this hurts so much please stop it please stop the pain\n\n");
+        sin_value += 0.2f;
         normal();
         return;
     } else if (pid == 0) {
@@ -73,6 +75,7 @@ void execute_cmd(char **pString) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("please fucking end the pain oh god help fuck this hurts so much please stop it please stop the pain\n\n");
+            sin_value += 0.2f;
             normal();
             exit(EXIT_FAILURE);
         }
@@ -93,6 +96,7 @@ void execute_pipe(char **pString, char **pString1) {
         red();
         printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
         perror("jesus christ this hurts so much please stop it please stop the pain\n\n");
+        sin_value += 0.2f;
         normal();
         return;
     }
@@ -101,6 +105,7 @@ void execute_pipe(char **pString, char **pString1) {
         red();
         printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
         perror("jesus fucking christ this hurts so much please stop it please stop the pain\n\n");
+        sin_value += 0.2f;
         normal();
         return;
     } else if (pid1 == 0) {
@@ -110,6 +115,7 @@ void execute_pipe(char **pString, char **pString1) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("please this hurts so much please stop the pain\n\n");
+            sin_value += 0.2f;
             normal();
             exit(EXIT_FAILURE);
         }
@@ -119,6 +125,7 @@ void execute_pipe(char **pString, char **pString1) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("jesus christ please this hurts so much please stop it please stop the pain\n\n");
+            sin_value += 0.2f;
             normal();
             return;
         } else if (pid2 == 0) {
@@ -129,6 +136,7 @@ void execute_pipe(char **pString, char **pString1) {
                 red();
                 printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
                 perror("jesus fucking christ please this hurts so much please stop it please stop the pain\n\n");
+                sin_value += 0.2f;
                 normal();
                 exit(EXIT_FAILURE);
             } else {
@@ -170,11 +178,15 @@ int is_builtin(char *string) {
         return 27;
     } else if (strcmp(string, "cd") == 0) {
         return 27;
+    } else if (strcmp(string, "cd..") == 0) {
+        return 27;
     } else if (strcmp(string, "dir") == 0) {
         return 27;
     } else if (strcmp(string, "cls") == 0) {
         return 27;
     } else if (strcmp(string, "pause") == 0) {
+        return 27;
+    } else if (strcmp(string, "paws") == 0) {
         return 27;
     } else {
         return 9 + 10;
@@ -201,6 +213,7 @@ void print_files(char *args) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("jesus christ please this hurts stop it please stop the pain\n\n");
+            sin_value += 0.22f;
             normal();
             return;
         }
@@ -232,6 +245,7 @@ void print_files(char *args) {
             red();
             printf("\n\nSOMETHING WRONG HAPPENED\nPLEASE CONTACT billgate@realmicrosoft.com AND SEND THEM THE FOLLOWING ERROR MESSAGE:\n");
             perror("jesus christ please this hurts stop it please fucking stop the pain\n\n");
+            sin_value += 0.2f;
             normal();
             return;
         }
@@ -268,6 +282,7 @@ int attempt_exit() {
     } else {
         printf("\n\n");
         printf("INPUT NOT ACCEPTED.\nTRY AGAIN LATER.\n");
+        sin_value += 1;
         normal();
         return 1;
     }
@@ -281,12 +296,28 @@ int execute_builtin(char **pString) {
     } else if (strcmp(pString[0], "cd") == 0) {
         fix_slashes(pString);
         chdir(pString[1]);
+    } else if (strcmp(pString[0], "cd..") == 0) {
+        // change directory to parent directory
+        chdir("..");
     } else if (strcmp(pString[0], "dir") == 0) {
         // if no args, call print_files with empty string
         if (pString[1] == NULL) {
             print_files("");
+        } else if (pString[1][0] == '\\') {
+            // if non-relative args don't start with C:\, return error
+            red();
+            printf("\n\nYOU MUST CALL DIR WITH C:\\ AT THE BEGINNING OF AN ABSOLUTE PATH\n");
+            printf("\n\n");
+            sin_value += 0.6f;
+            normal();
+        } else if (pString[1][0] == 'C' && pString[1][1] == ':') {
+            // remove first two characters from args
+            char *args = pString[1];
+            args += 2;
+            fix_slashes(&args);
+            print_files(args);
         } else {
-    printf("\n\n%s\n\n", pString[1]);
+            printf("\n\n%s\n\n", pString[1]);
             fix_slashes(pString);
             print_files(pString[1]);
         }
@@ -294,7 +325,7 @@ int execute_builtin(char **pString) {
         printf("\n\nCLEARING THE SCREEN, PLEASE WAIT...\n\n");
         sleep(20);
         clear();
-    } else if (strcmp(pString[0], "pause") == 0) {
+    } else if (strcmp(pString[0], "pause") == 0 || strcmp(pString[0], "paws") == 0) {
         // wait for user to press enter
         printf("\n\nPRESS ENTER TO CONTINUE\n\n");
         getchar();
@@ -305,12 +336,42 @@ int execute_builtin(char **pString) {
 }
 
 void parse_args(char *input, char **parsed_args) {
-	int i;
-	for (i = 0; i < MAX_ARGS; i++) {
-		parsed_args[i] = strsep(&input, " ");
-		if (parsed_args[i] == NULL) { break; }
-		if (strlen(parsed_args[i]) == 0) { i--; }
-	}
+    int i;
+    for (i = 0; i < MAX_ARGS; i++) {
+        parsed_args[i] = strsep(&input, " ");
+        if (parsed_args[i] == NULL) { break; }
+        if (strlen(parsed_args[i]) == 0) { i--; }
+    }
+}
+
+void handle_illegal_command(char *command) {
+    if (strcmp(command, "ls") == 0) {
+        red();
+        printf("\n\nYOU CANNOT USE THE COMMAND 'ls'\n");
+        printf("\nPLEASE USE THE COMMAND 'dir' instead (:\n\n");
+        sin_value += 0.3f;
+        printf("\nYOU ARE NOW IN TIMEOUT FOR 10 SECONDS\n");
+        normal();
+        return;
+    } else if (strcmp(command, "clear") == 0) {
+        red();
+        printf("\n\nYOU CANNOT USE THE COMMAND 'clear'\n");
+        printf("\nPLEASE USE THE COMMAND 'cls' instead (:\n\n");
+        sin_value += 0.2f;
+        printf("\nYOU ARE NOW IN TIMEOUT FOR 10 SECONDS\n");
+        normal();
+        return;
+    }
+}
+
+int64_t is_illegal_command(char *command) {
+    if (strcmp(command, "ls") == 0) {
+        return 1;
+    } else if (strcmp(command, "clear") == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 int parse_input(char *input, char **pString, char **pString1) {
@@ -324,6 +385,11 @@ int parse_input(char *input, char **pString, char **pString1) {
         if (input[i] == '/') {
             return -2;
         }
+    }
+
+    // check if the input is an illegal command
+    if (is_illegal_command(input) == 1) {
+        return -3;
     }
 
     // check for pipes
@@ -353,11 +419,56 @@ int parse_input(char *input, char **pString, char **pString1) {
     }
 }
 
+float floor_funny(float x) {
+    return (int) x;
+}
+
+float mod(float x, float y) {
+    return x - y * floor_funny(x / y);
+}
+
+float f_funny(float x, float y) {
+    float tmp = 0;
+    for (int i = 0; i < y; i++) {
+        tmp += mod(x, 2);
+        x = floor_funny(x / 2);
+    }
+    return tmp;
+}
+
+// this function is CRYPTOGRAPHICALLY SECURE! (TRUST) (:
+float funny_rand(float *seed, float max) {
+    float tmp = f_funny(*seed, 3);
+    *seed += 1;
+    return (f_funny(mod((*seed * 1103515245.3f + 12345.2f), max), 16.0f) / 65535.0f);
+
+}
+
+void sigint_handler() {
+    sin_value += 1;
+}
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
 
 int main() {
+
+    // no SIGINT allowed (:<
+    signal(SIGINT, sigint_handler);
+
+    float seed = 0;
+    // initialize random seed by getting cpu temperature
+    FILE *fp = fopen("/sys/class/thermal/thermal_zone0/temp", "r");
+    if (fp != NULL) {
+        fscanf(fp, "%f", &seed);
+        fclose(fp);
+    }
+
+    // if seed is still 0, use time
+    if (seed == 0) {
+        seed = (float) time(NULL);
+    }
+
     char input[MAX_CHAR];
     char *args[MAX_ARGS];
     char *pipe_args[MAX_ARGS];
@@ -372,6 +483,7 @@ int main() {
         sleep(2);
         cmd_type = parse_input(input, args, pipe_args);
         // return values:
+        // -3: illegal command!
         // -2: user put in a forward slash ):<
         // -1: invalid input
         // 0 - normal command
@@ -380,6 +492,7 @@ int main() {
 
         if (cmd_type == -1) {
             printf("INCORRECT INPUT PROVIDED\nASSUMING YOU ACCIDENTALLY HIT RETURN\nSLEEPING FOR 10 SECONDS TO PREVENT ACCIDENTAL INPUT\n");
+            sin_value += 0.01f;
             sleep(10);
             continue;
         } else if (cmd_type == 0) {
@@ -401,14 +514,18 @@ int main() {
             red();
             printf("\nYOU ARE NOT ALLOWED TO USE FORWARD SLASHES.\n");
             printf("THIS ACT WILL PERMANENTLY AFFECT YOUR VALUE AS A HUMAN BEING.\n");
+            sin_value += funny_rand(&seed, 30.0f) + 20.0f;
             printf("\n");
             printf("YOU HAVE BEEN SENT TO TIMEOUT FOR 30 SECONDS.\n");
             normal();
             sleep(30);
             continue;
+        } else if (cmd_type == -3) {
+            handle_illegal_command(args[0]);
+            sleep(10);
+            continue;
         }
     }
-    return 0;
 }
 
 #pragma clang diagnostic pop
