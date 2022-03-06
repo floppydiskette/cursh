@@ -21,7 +21,7 @@ idk if ur install will allow you to do this, but it'd be really funny if you ran
 `chsh -s <path to cursh>`  
 also you may need the readline library and the ncurses library, although idk   
    
-also i think if ur running yiffos, then you can do `buldge i cursh` to install it!
+also i think if ur running yiffos, then you can do `bulge i cursh` to install it!
 
 ## how 2 build
 i literally just told you that wtf
