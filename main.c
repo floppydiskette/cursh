@@ -389,6 +389,7 @@ int parse_input(char *input, char **pString, char **pString1) {
 
     // check if the input is an illegal command
     if (is_illegal_command(input) == 1) {
+        pString[0] = input;
         return -3;
     }
 
@@ -490,13 +491,13 @@ int main() {
         // 1 - builtin command
         // 2 - pipe command
 
-        if (cmd_type == -1) {
-            printf("INCORRECT INPUT PROVIDED\nASSUMING YOU ACCIDENTALLY HIT RETURN\nSLEEPING FOR 10 SECONDS TO PREVENT ACCIDENTAL INPUT\n");
-            sin_value += 0.01f;
+        if (cmd_type == 0) {
+            execute_cmd(args);
+        } else if (cmd_type == -3) {
+            printf(args[0]);
+            handle_illegal_command(args[0]);
             sleep(10);
             continue;
-        } else if (cmd_type == 0) {
-            execute_cmd(args);
         } else if (cmd_type == 1) {
             int e = execute_builtin(args);
             if (e == 2) {
@@ -520,8 +521,9 @@ int main() {
             normal();
             sleep(30);
             continue;
-        } else if (cmd_type == -3) {
-            handle_illegal_command(args[0]);
+        } else {
+            printf("INCORRECT INPUT PROVIDED\nASSUMING YOU ACCIDENTALLY HIT RETURN\nSLEEPING FOR 10 SECONDS TO PREVENT ACCIDENTAL INPUT\n");
+            sin_value += 0.01f;
             sleep(10);
             continue;
         }

@@ -8,4 +8,4 @@ add_executable(cursh main.c)
 target_link_libraries(cursh readline)
 target_link_libraries(cursh tinfo)
 
-set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG -static")
+set(CMAKE_C_FLAGS_RELEASE "-Ofast -DNDEBUG -static")
